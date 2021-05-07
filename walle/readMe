@@ -1,0 +1,7 @@
+
+                walle多渠道打包说明
+-----------------------------------------------------
+1.将打好的release包改名为app.apk,放到walle/pack/apk下
+2.修改channel中的渠道，一行一个
+3.删除output
+4.执行 python main.py
