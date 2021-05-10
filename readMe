@@ -1,0 +1,36 @@
+
+
+                                            项目说明
+
+----------------------------------------------------------------------------------------------------
+1.项目功能
+    功能1：Walle多渠道打包
+    功能2：Tinker热修复（腾讯官方地址：https://github.com/Tencent/tinker）
+
+2.Walle多渠道打包步骤
+    2.1：工程build.gradle和app的build.gradle中集成walle相关信息
+    2.2：将打好的release包改名为app.apk,放到walle/pack/apk下
+    2.3：修改channel中的渠道，一行一个
+    2.4：删除output
+    2.5：执行 python main.py
+
+3.Tinker热修复步骤
+    3.1：工程build.gradle和app的build.gradle中集成tinker相关信息
+    3.2：在gradle.properties中禁用R8和设置tinker版本
+    3.3：引入 com.hotfix.tinker包下源码
+    3.4：处理混淆相关信息
+    3.5：自定义 Application 类继承 DefaultApplicationLike，具体参考 WtApp类
+    3.6：在 AndroidManifest.xml中设置 <application> name 属性
+    3.7：清空app下build.gradle中的 oldApkName、oldMappingName、oldResourceName，删除 tinkerBaseDir 下的apk、mapping和R文件
+    3.8：打release包
+    3.9：拷贝app/build/bakApk下的 apk、mapping和R文件 到 tinkerBaseDir 下，并在app下build.gradle中设置 oldApkName、oldMappingName、oldResourceName
+    3.10：执行Gradle的Tasks-tinker-tinkerPatchRelease，生成patch包
+    3.11：拷贝 build/outputs/apk/tinkerPatch/release/patch_signed_7zip.apk 到 手机根目录
+    3.12：手机安装 3.8 打出的apk，授权存储权限，启动apk，能看到 Toast成功提示，重启apk就能看到修复效果
+
+----------------------------------------------------------------------------------------------------
+异常处理：
+    1.!META-INF/versions/9/**.class,!module-info.class
+        解决方案：proguard-rules.pro中加入 -ignorewarnings
+    2.xxx already has a mapping","sources":[{}],"tool":"R8"
+        解决方案：在 gradle.properties中加入 android.enableR8=false 来禁用R8

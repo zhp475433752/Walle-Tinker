@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,8 +46,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        textView.setText(WalleChannelReader.getChannel(textView.getContext(), ""));
-
+        textView.setText(WalleChannelReader.getChannel(textView.getContext(), "我是热修复文案"));
+        Toast.makeText(getContext(), "我是热修复文案哈哈哈哈开心", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressLint("NonConstantResourceId")

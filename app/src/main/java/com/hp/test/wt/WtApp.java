@@ -1,8 +1,10 @@
 package com.hp.test.wt;
 
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.multidex.MultiDex;
@@ -22,10 +24,7 @@ import com.tencent.tinker.loader.shareutil.ShareConstants;
  */
 @DefaultLifeCycle(application = "com.hp.test.wt.WalleTinkerApp",
         flags = ShareConstants.TINKER_ENABLE_ALL,
-        loaderClass = "com.tencent.tinker.loader.TinkerLoader",
         loadVerifyFlag = false)
-//application类名。只能用字符串，这个WalleTinkerApp文件是不存在的，但可以在AndroidManifest.xml的application标签上使用（name）
-//loaderClass = "com.tencent.tinker.loader.TinkerLoader",//loaderClassName, 我们这里使用默认即可!（可不写）
 public class WtApp extends DefaultApplicationLike {
     private static final String TAG = "WtApp";
 
@@ -67,5 +66,10 @@ public class WtApp extends DefaultApplicationLike {
         Log.d(TAG, "initChannel---"+channel);
         System.out.println("initChannel---"+channel);
 
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    public void registerActivityLifecycleCallbacks(Application.ActivityLifecycleCallbacks callback) {
+        getApplication().registerActivityLifecycleCallbacks(callback);
     }
 }
